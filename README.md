@@ -1,9 +1,9 @@
 # GRADMAP23
 Location to store code for the 2023 GRAD-MAP project: Kinematics of the Ionized Outflow in the Northwest of NGC 253.
 
-==============================
+======================================================================================================
 # SET UP A CONDA ENVIRONMENT
-==============================
+======================================================================================================
 
 Step 0: Make sure you have Anaconda downloaded and ready to go: https://docs.anaconda.com/free/anaconda/install/
 
@@ -31,22 +31,24 @@ Step 4: To deactive your environment, type:
 You must activate your environment every time you open a new terminal.
 
 
-==============================
+======================================================================================================
 # WORKSPACE IDE
-==============================
+======================================================================================================
 
 I recommend using Spyder and Jupyter for this project. To open them, type into the terminal:
 
     spyder
+
+and
 
     jupyter notebook
 
 You will need separate terminals for each.
 
 
-==============================
+======================================================================================================
 # DATA
-==============================
+======================================================================================================
 
 Please download the datacube here (click "File Download"):
 
@@ -55,9 +57,10 @@ Please download the datacube here (click "File Download"):
 Warning! You will need 5.5 GB of free space to download this datacube.
 
 
-==================================
+======================================================================================================
 # SCREEN SESSION
-==================================
+======================================================================================================
+
 The fitting program will take several hours to run, even on a fast machine.
 To make sure the program will run without interruption, I recommend using a screen session,
 which is a terminal that runs in the background and won't stop even if your computer goes to sleep
@@ -87,9 +90,9 @@ And to end a screen session, type (in the screen session):
     exit
 
 
-==================================
+======================================================================================================
 # HOW TO RUN THE FITTING ROUTINE
-==================================
+======================================================================================================
 
 Please copy/download the following files to the same directory:
 
