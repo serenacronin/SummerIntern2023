@@ -97,18 +97,18 @@ And to end a screen session, type (in the screen session):
 Please copy/download the following files to the same directory:
 
     routine.py
-    run_routine_template.py
+    run_template.py
     plot_fits.py
 
 Start up a screen session so you can run the program for several hours without interruption 
 (see "SCREEN SESSION" above).
 
-Using Spyder, make a copy of 'run_routine_template.py' called 'run_routine.py'.
-Directly edit in 'run_routine.py' so that you will always have the original template to fall back on.
-You will need to update run_routine.py with your best initial guesses, correct file paths, etc.
+Using Spyder, make a copy of 'run_template.py' called 'run.py'.
+Directly edit in 'run.py' so that you will always have the original template to fall back on.
+You will need to update run.py with your best initial guesses, correct file paths, etc.
 You also have the option to test things on a small subset of the datacube before you run the routine
 on the entire cube!
 
 To run the fitting routine, type in the terminal:
 
-    python run_routine.py
+    python run.py

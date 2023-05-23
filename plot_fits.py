@@ -1,27 +1,23 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+========================================================================================
+Name: plot_fits.py
+
 Created on Thu Jun  9 11:44:23 2022
 
-@author: serenac
+Author: Serena A. Cronin
+
+This script plots the resulting fits from routine.py.
+========================================================================================
 """
 
-import numpy as np
-import astropy.io.fits as pyfits
-from astropy.io import fits
-from astropy import units as u
-from spectral_cube import SpectralCube
-import regions
 import matplotlib.pyplot as plt
-import numpy as np
-import pyspeckit
 import warnings
 from matplotlib.lines import Line2D
-from gauss_tools import one_gaussian, three_gaussian, red_chisq, chisq
-import scipy
 warnings.filterwarnings("ignore")
 
-def plot_one_fit(xpix, ypix, spec, redchisq, savepath, xmin, xmax, ymax, fluxnorm):
+def plotting(xpix, ypix, spec, redchisq, savepath, xmin, xmax, ymax, fluxnorm):
 
     """
     This function will plot the results of the fitting routine.
