@@ -31,6 +31,10 @@ To navigate to a new directory, type:
 
     cd path_to_directory
 
+or, to navigate backwards:
+
+    cd ../path_to_directory
+
 The above assumes you will be working on the computer 'jansky' (which we recommend).
 
 
