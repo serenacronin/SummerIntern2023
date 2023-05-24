@@ -30,6 +30,8 @@ To navigate to a new directory, type:
 
     cd path_to_directory
 
+The above assumes you will be working on the computer 'jansky' (which we recommend).
+
 
 ====================================================================================
 # SET UP A CONDA ENVIRONMENT
