@@ -6,6 +6,7 @@ Location to store code for the 2023 GRAD-MAP project: Kinematics of the Ionized 
 ====================================================================================
 
 Step 1: Open a terminal on your laptop.
+
 Step 2: Type in the following and hit enter:
 
     ssh username@ssh.astro.umd.edu
