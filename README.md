@@ -2,6 +2,36 @@
 Location to store code for the 2023 GRAD-MAP project: Kinematics of the Ionized Outflow in the Northwest of NGC 253.
 
 ====================================================================================
+# LOG ONTO A UMD ASTRO COMPUTER REMOTELY
+====================================================================================
+
+Step 1: Open a terminal on your laptop.
+Step 2: Type in the following and hit enter:
+
+    ssh username@ssh.astro.umd.edu
+
+Step 3: Put in your password. Then, type:
+
+    ssh jansky
+
+Step 4: Navigate to the the directory you want to work in by typing:
+
+    cd /jansky/username/
+
+To list all files in this directory, type:
+
+    ls
+
+To make a new sub directory in this directory, type:
+
+    mkdir directory_name
+
+To navigate to a new directory, type:
+
+    cd path_to_directory
+
+
+====================================================================================
 # SET UP A CONDA ENVIRONMENT
 ====================================================================================
 
