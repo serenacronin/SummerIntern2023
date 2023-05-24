@@ -22,13 +22,13 @@ startTime = time.time()  # time the script
 warnings.filterwarnings("ignore")
 
 # ============================================================================================================ 
-# VARIABLES TO TOGGLE TO RUN DIFFERENT MODELS ON DIFFERENT REGIONS OF THE DATACUBE
+# VARIABLES TO CHANGE TO RUN DIFFERENT MODELS ON DIFFERENT REGIONS OF THE DATACUBE
 # ============================================================================================================
 
-fit1 = False
-fit2 = False
-fit3 = False
-subcube = False
+fit1 = False  # set to True when you want to run the one system of lines fit
+fit2 = False  # two systems of lines fit
+fit3 = False  # three systems of lines
+subcube = False  # do you want to work with a small region of the cube?
 
 savepath = 'INSERT PATH TO DIRECTORY TO SAVE THE FITS'
 save_fits_num = 'INSERT EVERY N FITS YOU WANT TO SAVE TO A PNG. EX: SAVE_FITS_NUM = 1 SAVES EVERY SINGLE FIT.'
@@ -40,6 +40,7 @@ save_fits_num = 'INSERT EVERY N FITS YOU WANT TO SAVE TO A PNG. EX: SAVE_FITS_NU
 R = 2989  # MUSE resolving power
 Vsys = 243.  # systemic velocity of NGC 253, taken from Koribalski+04
 c = 3*10**5  # speed of light in km/s
+fluxnorm = 1e-20  # value that the y-axis is normalized to; taken from datacube header
 
 # file names
 filename = 'INSERT PATH TO THE DATACUBE'
@@ -182,7 +183,7 @@ if __name__ == '__main__':
          cube = cube[:,y1:y2, x1:x2]  # slicing is in the format of z, y, x
 	
     FittingInfo = InputParams(fit1, fit2, fit3, R, free_params, 
-                            continuum_limits=[ContLower1, ContUpper2],
+                            continuum_limits=[ContLower1, ContUpper2], fluxnorm=fluxnorm,
                             amps1=amps1, centers1=wls1, ties1=ties1_per_pix,
                             amps2=amps2, centers2=wls2, ties2=ties2_per_pix,
                             amps3=amps3, centers3=wls3, ties3=ties3_per_pix,
