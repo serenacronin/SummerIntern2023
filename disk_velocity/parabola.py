@@ -3,7 +3,7 @@
 
 """
 Created on Tue Aug 23 14:50:53 2022
-lfjkaklsdfjdf
+;lksdafjdlksa;jflkjkl;sdfjkl;sdjf
 @author: Serena A. Cronin
 
 Functions that allow you to calculate the coefficients and vertex of a parabola.
