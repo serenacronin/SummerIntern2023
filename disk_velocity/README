@@ -1,0 +1,20 @@
+# GRADMAP23
+# README file for disk_velocity directory
+
+====================================================================================
+# PROVIDED FUNCTIONS
+====================================================================================
+Functions that fit a parabola and extract the vertex can be found in
+
+    parabola.py
+
+Functions that will convolve and smooth the resulting velocity maps can be found in
+
+    smooth.py
+
+====================================================================================
+# TODO
+====================================================================================
+
+1. Write function that will convert from wavelengths in Angstroms to velocity
+2. Put it all together & save the output as a FITS file!
