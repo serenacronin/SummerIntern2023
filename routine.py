@@ -161,7 +161,7 @@ def InputParams(fit1, fit2, fit3, R, free_params, continuum_limits, fluxnorm,
 				amps1=False, centers1=False, ties1=False, 
 				amps2=False, centers2=False, ties2=False,
 				amps3=False, centers3=False, ties3=False,
-				redchisq_range=False, save_fits=False, savepath=False):
+				save_fits=False, savepath=False):
 	
 	
 	"""
@@ -438,7 +438,7 @@ def InputParams(fit1, fit2, fit3, R, free_params, continuum_limits, fluxnorm,
 			guesses1, limits1, limited1, ties1,
 			guesses2, limits2, limited2, ties2,
 			guesses3, limits3, limited3, ties3,
-			redchisq_range, save_fits, savepath])
+			save_fits, savepath])
 
 
 def compute_rms(spec_axis, spectrum, ContLower, ContUpper):
@@ -790,8 +790,8 @@ def FitRoutine(FittingInfo, cube):
 
 		f3 = open("%sfits3.txt" % savepath, "w")
 		f3.write('X,Y,RedChiSq,')
-		f3.write('Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Amp9,Amp10,Amp11,Amp12,Amp13,Amp14,Amp15')
-		f3.write('Wvl1,Wvl2,Wvl3,Wvl4,Wvl5,Wvl6,Wvl7,Wvl8,Wvl9,Wvl10,Wvl11,Wvl12,Wvl13,Wvl14,Wvl15')
+		f3.write('Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Amp9,Amp10,Amp11,Amp12,Amp13,Amp14,Amp15,')
+		f3.write('Wvl1,Wvl2,Wvl3,Wvl4,Wvl5,Wvl6,Wvl7,Wvl8,Wvl9,Wvl10,Wvl11,Wvl12,Wvl13,Wvl14,Wvl15,')
 		f3.write('Sig1,Sig2,Sig3,Sig4,Sig5,Sig6,Sig7,Sig8,Sig9,Sig10,Sig11,Sig12,Sig13,Sig14,Sig15\n')
 
 		if os.path.exists("%sfits3_err.txt" % savepath):
@@ -799,8 +799,8 @@ def FitRoutine(FittingInfo, cube):
 
 		e3 = open("%sfits3_err.txt" % savepath, "w")
 		e3.write('X,Y,RedChiSq,')
-		e3.write('Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Amp9,Amp10,Amp11,Amp12,Amp13,Amp14,Amp15')
-		e3.write('Wvl1,Wvl2,Wvl3,Wvl4,Wvl5,Wvl6,Wvl7,Wvl8,Wvl9,Wvl10,Wvl11,Wvl12,Wvl13,Wvl14,Wvl15')
+		e3.write('Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Amp9,Amp10,Amp11,Amp12,Amp13,Amp14,Amp15,')
+		e3.write('Wvl1,Wvl2,Wvl3,Wvl4,Wvl5,Wvl6,Wvl7,Wvl8,Wvl9,Wvl10,Wvl11,Wvl12,Wvl13,Wvl14,Wvl15,')
 		e3.write('Sig1,Sig2,Sig3,Sig4,Sig5,Sig6,Sig7,Sig8,Sig9,Sig10,Sig11,Sig12,Sig13,Sig14,Sig15\n')
 	
 	# ============================================================================================================
@@ -903,8 +903,7 @@ def FitRoutine(FittingInfo, cube):
 				chans_spec = np.array(spectrum)[chans_ind]
 				chans_model1 = model1[chans_ind]
 
-				redchisq1 = round(red_chisq(chans_spec, chans_model1, 
-					num_params=len(amps1_list)*3, err=errs1, 
+				redchisq1 = round(red_chisq(chans_spec, chans_model1, err=errs1, 
 					free_params=free_params),4)
 				
 				# option to print out fits
@@ -913,8 +912,7 @@ def FitRoutine(FittingInfo, cube):
 						plotting(i, j, spec1, redchisq1, 
 									savepath = '%sfits1' % savepath, 
 									xmin=6500, xmax=6800, 
-									ymax=max(spectrum), fluxnorm=fluxnorm,
-									input_params = total_guesses1)
+									ymax=max(spectrum), fluxnorm=fluxnorm)
 						
 				# save parameters to file
 				with open("%sfits1.txt" % savepath, "a") as f1:
@@ -948,7 +946,7 @@ def FitRoutine(FittingInfo, cube):
 									else guesses2[q] 
 									for q in range(len(guesses2))]
 			
-				
+				 
 				total_limits2 =  [(limits2[q][0][j,i], limits2[q][1][j,i]) 
 										if type(limits2[q][0]) == np.ndarray 
 										else limits2[q] 
@@ -1009,8 +1007,7 @@ def FitRoutine(FittingInfo, cube):
 				chans_spec = np.array(spectrum)[chans_ind]
 				chans_model2 = model2[chans_ind]
 
-				redchisq2 = round(red_chisq(chans_spec, chans_model2, 
-					num_params=len(amps2_list)*3, err=errs2, 
+				redchisq2 = round(red_chisq(chans_spec, chans_model2, err=errs2, 
 					free_params=free_params),4)
 
 				# option to print out fits
@@ -1019,8 +1016,7 @@ def FitRoutine(FittingInfo, cube):
 						plotting(i, j, spec2, redchisq2, 
 									savepath = '%sfits2' % savepath, 
 									xmin=6500, xmax=6800,
-									ymax=max(spectrum), fluxnorm=fluxnorm,
-									input_params = total_guesses2)
+									ymax=max(spectrum), fluxnorm=fluxnorm)
 
 				# save parameters to file
 				with open("%sfits2.txt" % savepath, "a") as f2:
@@ -1122,8 +1118,7 @@ def FitRoutine(FittingInfo, cube):
 				chans_spec = np.array(spectrum)[chans_ind]
 				chans_model3 = model3[chans_ind]
 
-				redchisq3 = round(red_chisq(chans_spec, chans_model3, 
-					num_params=len(amps3_list)*3, err=errs3, 
+				redchisq3 = round(red_chisq(chans_spec, chans_model3, err=errs3, 
 					free_params=free_params),4)
 				
 				# option to print out fits
@@ -1132,8 +1127,7 @@ def FitRoutine(FittingInfo, cube):
 						plotting(i, j, spec3, redchisq3, 
 									savepath = '%s/fits3' % savepath, 
 									xmin=6500, xmax=6800,
-									ymax=max(spectrum), fluxnorm=fluxnorm,
-									input_params = total_guesses3)
+									ymax=max(spectrum), fluxnorm=fluxnorm)
 						
 				# save parameters to file
 				with open("%sfits3.txt" % savepath, "a") as f3:

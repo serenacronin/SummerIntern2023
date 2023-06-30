@@ -105,11 +105,11 @@ if fit1 == True:
     wls1 = [vels_disk[0], vels_disk[1], vels_disk[2], vels_disk[3], vels_disk[4]]
 
     # tying amps, wavelengths, widths
-    ties1_per_pix = ['', 'p[4] - %f' % tie_niia, 'p[5]',
+    ties1_per_pix = ['', '%f * p[4] / %f' % (NIIa, Halpha), 'p[5]',
                     '', '', '',
-                    '%f*p[0]' % amp_tie, 'p[4] + %f' % tie_niib, 'p[5]',
-                    '', 'p[4] + %f' % tie_siia, 'p[5]',
-                    '', 'p[4] + %f' % tie_siib, 'p[5]']
+                    '%f*p[0]' % amp_tie, '%f * p[4] / %f' % (NIIb, Halpha), 'p[5]',
+                    '', '%f * p[4] / %f' % (SIIa, Halpha), 'p[5]',
+                    '', '%f * p[4] / %f' % (SIIb, Halpha), 'p[5]']
 else:
     amps1 = False
     wls1 = False
@@ -121,21 +121,24 @@ else:
 
 if fit2 == True:
 
+    Voutfl = Voutfl_red  # or Voutfl_blue
+
     # amplitude + wavelength guesses
 	# first wavelength guess is blueshifted with respect to the disk guess
     amps2 = ['INSERT THE INITIAL GUESS FOR THE AMPLITUDE OF EACH LINE']
-    wls2 = [vels_disk[0]*(Voutfl_blue + c)/c, vels_disk[0],
-            vels_disk[1]*(Voutfl_blue + c)/c, vels_disk[1],
-            vels_disk[2]*(Voutfl_blue + c)/c, vels_disk[2],
-            vels_disk[3]*(Voutfl_blue + c)/c, vels_disk[3],
-            vels_disk[4]*(Voutfl_blue + c)/c, vels_disk[4]]
+    wls2 = [vels_disk[0]*(Voutfl + c)/c, vels_disk[0],
+            vels_disk[1]*(Voutfl + c)/c, vels_disk[1],
+            vels_disk[2]*(Voutfl + c)/c, vels_disk[2],
+            vels_disk[3]*(Voutfl + c)/c, vels_disk[3],
+            vels_disk[4]*(Voutfl + c)/c, vels_disk[4]]
 
     # tying amps, wavelengths, widths
-    ties2_per_pix = ['', 'p[7] - %f' % tie_niia, 'p[8]', '', 'p[10] - %f' % tie_niia, 'p[11]',
+    ties2_per_pix = ['', '%f * p[7] / %f' % (NIIa, Halpha), 'p[8]', '', '%f * p[10] / %f' % (NIIa, Halpha), 'p[11]',
                         '', '', '', '', '', '',
-                        '%f*p[0]' % amp_tie, 'p[7] + %f' % tie_niib, 'p[8]', '%f*p[3]' % amp_tie, 'p[10] + %f' % tie_niib, 'p[11]',
-                        '', 'p[7] + %f' % tie_siia, 'p[8]', '', 'p[10] + %f' % tie_siia, 'p[11]',
-                        '', 'p[7] + %f' % tie_siib, 'p[8]', '', 'p[10] + %f' % tie_siib, 'p[11]']
+                        '%f*p[0]' % amp_tie, '%f * p[7] / %f' % (NIIb, Halpha), 'p[8]', '%f*p[3]' % amp_tie, '%f * p[10] / %f' % (NIIb, Halpha), 'p[11]',
+                        '', '%f * p[7] / %f' % (SIIa, Halpha), 'p[8]', '', '%f * p[10] / %f' % (SIIa, Halpha), 'p[11]',
+                        '', '%f * p[7] / %f' % (SIIb, Halpha), 'p[8]', '', '%f * p[10] / %f' % (SIIb, Halpha), 'p[11]']
+
 
 else:
     amps2 = False
@@ -159,11 +162,11 @@ if fit3 == True:
             vels_disk[4]*(Voutfl_blue + c)/c, vels_disk[4], vels_disk[4]*(Voutfl_red + c)/c]
 
     # tying amps, wavelengths, widths
-    ties3_per_pix = ['', 'p[10] - %f' % tie_niia, 'p[11]', '', 'p[13] - %f' % tie_niia, 'p[14]', '', 'p[16] - %f' % tie_niia, 'p[17]', 
+    ties3_per_pix = ['', '%f * p[10] / %f' % (NIIa, Halpha), 'p[11]', '', '%f * p[13] / %f' % (NIIa, Halpha), 'p[14]', '', '%f * p[16] / %f' % (NIIa, Halpha), 'p[17]', 
                     '', '', '', '', '', '', '', '', '',
-                    '%f*p[0]' % amp_tie, 'p[10] + %f' % tie_niib, 'p[11]', '%f*p[6]' % amp_tie, 'p[13] + %f' % tie_niib, 'p[14]', '%f*p[6]' % amp_tie, 'p[16] + %f' % tie_niib, 'p[17]',
-                    '', 'p[10] + %f' % tie_siia, 'p[11]', '', 'p[13] + %f' % tie_siia, 'p[14]', '', 'p[16] + %f' % tie_siia, 'p[17]',
-                    '', 'p[10] + %f' % tie_siib, 'p[11]', '', 'p[13] + %f' % tie_siib, 'p[14]', '', 'p[16] + %f' % tie_siib, 'p[17]']
+                    '%f*p[0]' % amp_tie, '%f * p[10] / %f' % (NIIb, Halpha), 'p[11]', '%f*p[6]' % amp_tie, '%f * p[13] / %f' % (NIIb, Halpha), 'p[14]', '%f*p[6]' % amp_tie, '%f * p[16] / %f' % (NIIb, Halpha), 'p[17]',
+                    '', '%f * p[10] / %f' % (SIIa, Halpha), 'p[11]', '', '%f * p[13] / %f' % (SIIa, Halpha), 'p[14]', '', '%f * p[16] / %f' % (SIIa, Halpha), 'p[17]',
+                    '', '%f * p[10] / %f' % (SIIb, Halpha), 'p[11]', '', '%f * p[13] / %f' % (SIIb, Halpha), 'p[14]', '', '%f * p[16] / %f' % (SIIb, Halpha), 'p[17]']
 
 else:
     amps3 = False
