@@ -75,6 +75,7 @@ kern_arr = gauss_2d_kernel(sigma=mask_kern)  # build the kernel
 new_image = convolve(orig_data, kern_arr, normalize_kernel=False, nan_treatment='fill')
 
 if plot == True:
+    fig = plt.figure(figsize=(10,10))  # can mess around with the figure size
     vmin = 'FIXME: SET VELOCITY MIN FOR PLOTTING'
     vmax = 'FIXME: SET VELOCITY MAX FOR PLOTTING'
     ax = plt.subplot(2, 2, 1)
@@ -136,6 +137,7 @@ if plot == True:
 final_image[np.isnan(orig_cube[1])] = np.nan # [0] has some nans within
 
 if plot == True:
+    ax = plt.subplot(2, 2, 4)
     ax.imshow(final_image, vmin=vmin, vmax=vmax, origin='lower',cmap='RdBu_r')
     ax.set_title('Final Image',fontsize=20)
     ax.tick_params(axis='both', which='both',direction='in',
