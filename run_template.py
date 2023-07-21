@@ -14,7 +14,7 @@ It calls functions from routine.py and passes in initial guesses.
 """
 
 # import functions
-from routine import CreateCube, InputParams, optical_vel_to_ang
+from routine import CreateCube, InputParams, optical_vel_to_ang, FitRoutine
 import time
 from astropy.io import fits
 import warnings
@@ -199,7 +199,9 @@ if __name__ == '__main__':
           fitnum = '2'
     elif fit3 == True:
          fitnum = '3'
-
+	    
+    FitRoutine(FittingInfo=FittingInfo, cube=cube)
+	
     outfile = open('%sTime_CubeFitRoutine_Fit%s.txt'% (savepath, fitnum), 'w')
     executionTime = (time.time() - startTime)
     print('Execution time in seconds: ' + str(executionTime))  # prints to the terminal
