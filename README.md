@@ -44,15 +44,15 @@ The above assumes you will be working on the computer 'jansky' (which we recomme
 
 Step 0: Make sure you have Anaconda downloaded and ready to go: https://docs.anaconda.com/free/anaconda/install/
 
-Step 1: Create the environment! Use a custom name, for example, "gradmap23":
+Step 1: Create the environment! Use a custom name, for example, "ngc253-project":
 
-    conda create --name gradmap23
+    conda create --name ngc253-project
     
 Make sure you press 'y' when prompted.
 
 Step 2: Activate your environment.
 
-    source activate gradmap23
+    source activate ngc253-project
 
 Step 3: Add the packages and the specific versions you need using the following commands:
 
@@ -63,7 +63,7 @@ Make sure you press 'y' when prompted. The specified versions are just to match 
 
 Step 4: To deactive your environment, type:
 
-    source deactivate gradmap23
+    source deactivate ngc253-project
 
 You must activate your environment every time you open a new terminal.
 
