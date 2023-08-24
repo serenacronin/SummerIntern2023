@@ -17,7 +17,7 @@ Step 3: Put in your password. Then, type:
 
 Step 4: Navigate to the the directory you want to work in by typing:
 
-    cd /jansky/username/
+    cd /jansky/cronin/
 
 To list all files in this directory, type:
 
@@ -37,6 +37,33 @@ or, to navigate backwards:
 
 The above assumes you will be working on the computer 'jansky' (which we recommend).
 
+====================================================================================
+# HOW TO RUN THE ROUTINE ON JANSKY
+====================================================================================
+Step 1: ssh into jansky using the steps above. Make sure you are in your directory:
+
+    /jansky/cronin/your_directory
+
+Step 2: Open a screen session (see below).
+
+Step 3: Load in the proper anaconda environment by typing:
+
+        astroload -v anaconda3-21 python
+
+Step 4: Open a different terminal session on your laptop. To upload a file to jansky, type the following:
+
+        scp your_file.py your_username@ssh.astro.umd.edu:'/home/your_username/'
+
+To upload an entire folder, type:
+
+        scp -r your_folder your_username@ssh.astro.umd.edu:'/home/your_username/'
+
+Step 5: Your file is now in your home directory. Move it to your working directory by doing:
+
+        mv your_file.py /jansky/cronin/your_directory/
+
+Step 6: Make sure you have all the necessary files uploaded to your working directory on jansky.
+Then you can run everything like usual using the steps below!
 
 ====================================================================================
 # SET UP A CONDA ENVIRONMENT
