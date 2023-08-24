@@ -40,6 +40,7 @@ The above assumes you will be working on the computer 'jansky' (which we recomme
 ====================================================================================
 # HOW TO RUN THE ROUTINE ON JANSKY
 ====================================================================================
+
 Step 1: ssh into jansky using the steps above. Make sure you are in your directory:
 
     /jansky/cronin/your_directory
