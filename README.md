@@ -66,6 +66,17 @@ Step 5: Your file is now in your home directory. Move it to your working directo
 Step 6: Make sure you have all the necessary files uploaded to your working directory on jansky.
 Then you can run everything like usual using the steps below!
 
+Step 7: Move your results (the "fits2" folder) to your home directory on jansky (because it is easiest to download from here):
+
+    mv -r fits2 /home/your_username/
+
+Step 8: Download your results by doing the following in a terminal that is on your laptop (not on jansky):
+
+    scp -r your_username@ssh.astro.umd.edu:/home/your_username/fits2 ~/Desktop
+
+This will download the folder called "fits2" to your Desktop on your laptop. This should include the text files and .png files you need.
+
+
 ====================================================================================
 # SET UP A CONDA ENVIRONMENT
 ====================================================================================
