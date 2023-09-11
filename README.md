@@ -68,7 +68,7 @@ Then you can run everything like usual using the steps below!
 
 Step 7: Move your results (the "fits2" folder) to your home directory on jansky (because it is easiest to download from here):
 
-    mv -r fits2 /home/your_username/
+    mv fits2 /home/your_username/
 
 Step 8: Download your results by doing the following in a terminal that is on your laptop (not on jansky):
 
