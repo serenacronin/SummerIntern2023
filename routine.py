@@ -153,6 +153,7 @@ def CreateCube(filename, SlabLower, SlabUpper, ContLower1, ContUpper1,
 	med = masked_cube.median(axis=0)
 	med_cube = cube - med
 	cube_final = med_cube.spectral_slab(SlabLower*u.AA, SlabUpper*u.AA)
+
 	return cube_final
 
 
@@ -657,7 +658,7 @@ def component_order_check(params, fit2 = False, fit3 = False):
 def FitRoutine(FittingInfo, cube):
 	
 	"""
-	This function wraps around the pyspeckit and spectral-cube packages
+	This function wraps around the pykit and spectral-cube packages
 	to fit one, two, and three systems of lines to spectra in an IFU datacube,
 	assuming each component is Gaussian. The best way to use this is in 
 	conjunction with the InputParams() function, which will generate the initial 
@@ -756,7 +757,7 @@ def FitRoutine(FittingInfo, cube):
 			os.remove("%sfits1_err.txt" % savepath)
 
 		e1 = open("%sfits1_err.txt" % savepath, "w")
-		e1.write('X,Y,RedChiSq,')
+		e1.write('X,Y,RedChiSq,RedChiSqErr')
 		e1.write('Amp1,Amp2,Amp3,Amp4,Amp5,')
 		e1.write('Wvl1,Wvl2,Wvl3,Wvl4,Wvl5,')
 		e1.write('Sig1,Sig2,Sig3,Sig4,Sig5\n')
@@ -777,7 +778,7 @@ def FitRoutine(FittingInfo, cube):
 			os.remove("%sfits2_err.txt" % savepath)
 
 		e2 = open("%sfits2_err.txt" % savepath, "w")
-		e2.write('X,Y,RedChiSq,')
+		e2.write('X,Y,RedChiSq,RedChiSqErr,')
 		e2.write('Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Amp9,Amp10,')
 		e2.write('Wvl1,Wvl2,Wvl3,Wvl4,Wvl5,Wvl6,Wvl7,Wvl8,Wvl9,Wvl10,')
 		e2.write('Sig1,Sig2,Sig3,Sig4,Sig5,Sig6,Sig7,Sig8,Sig9,Sig10\n')
@@ -798,7 +799,7 @@ def FitRoutine(FittingInfo, cube):
 			os.remove("%sfits3_err.txt" % savepath)
 
 		e3 = open("%sfits3_err.txt" % savepath, "w")
-		e3.write('X,Y,RedChiSq,')
+		e3.write('X,Y,RedChiSq,RedChiSqErr,')
 		e3.write('Amp1,Amp2,Amp3,Amp4,Amp5,Amp6,Amp7,Amp8,Amp9,Amp10,Amp11,Amp12,Amp13,Amp14,Amp15,')
 		e3.write('Wvl1,Wvl2,Wvl3,Wvl4,Wvl5,Wvl6,Wvl7,Wvl8,Wvl9,Wvl10,Wvl11,Wvl12,Wvl13,Wvl14,Wvl15,')
 		e3.write('Sig1,Sig2,Sig3,Sig4,Sig5,Sig6,Sig7,Sig8,Sig9,Sig10,Sig11,Sig12,Sig13,Sig14,Sig15\n')
@@ -813,12 +814,19 @@ def FitRoutine(FittingInfo, cube):
 	_, y, x = cube.shape
 
 	# set up a progress bar and a count of the pixels
-	pbar = tqdm(total=x*y, desc='Running fitting routine...')
+	pbar = tqdm(total=(x-310)*(y-106), desc='Running fitting routine...')
 	count = 0
 
 	# loop over each pixel and run the fitting routine!
-	for i in np.arange(x): # x-axis 
-		for j in np.arange(y): # y-axis
+	for i in np.arange(310,x): # x-axis
+
+		for j in np.arange(106,y): # y-axis
+
+			# # FIXME: debugging why it craps out after this pixel
+			# if (i < 310) & (j < 106):
+			# 	pbar.update(1)  
+			# 	count+=1
+			# 	continue
 
 			spectrum = np.array(cube[:,j,i], dtype='float64')  # grab the spectrum
 						
@@ -868,8 +876,7 @@ def FitRoutine(FittingInfo, cube):
 				spec1.measure(fluxnorm = fluxnorm)
 				
 				# get errors on the spectrum for the reduced chi square
-				errs1 = compute_rms(spec_axis, spectrum, continuum_limits[0], 
-									continuum_limits[1])
+				errs1 = compute_rms(spec_axis, spectrum, continuum_limits[0], continuum_limits[1])
 
 				# get fit params
 				amps1_list = []
@@ -927,8 +934,8 @@ def FitRoutine(FittingInfo, cube):
 				# save errors on parameters to file
 				with open("%sfits1_err.txt" % savepath, "a") as e1:
 					e1.write('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,'
-	      					'%s, %s, %s, %s, %s\n' %
-							(i, j, redchisq1,
+	      					'%s, %s, %s, %s, %s, %s\n' %
+							(i, j, redchisq1, errs1,
 							err_params1[0], err_params1[3], err_params1[6], err_params1[9], err_params1[12],
 	     					err_params1[1], err_params1[4], err_params1[7], err_params1[10], err_params1[13],
 						    err_params1[2], err_params1[5], err_params1[8], err_params1[11], err_params1[14]))
@@ -952,6 +959,7 @@ def FitRoutine(FittingInfo, cube):
 										else limits2[q] 
 										for q in range(len(limits2))]
 				
+				
 				# if the model is nan, then we skip the pixel and update the progressbar and count
 				if np.isfinite(total_guesses2[1]) == False:
 					pbar.update(1)
@@ -961,6 +969,12 @@ def FitRoutine(FittingInfo, cube):
 				# grab the spectrum
 				spec2 = pyspeckit.Spectrum(data=spectrum, xarr=np.linspace(minval, maxval, 
 											len(spectrum)))
+				
+				# total_guesses2 = [24.3258, 6555.7482, 1.2063, 47.7393, 6553.1403, 1.0921, 
+				# 	  23.406, 6570.5165, 1.2063, 221.5397, 6567.9027, 1.0921, 
+				# 	  72.9773, 6591.1898, 1.2063, 143.2178, 6588.5678, 1.0921, 
+				# 	  38.967, 6724.3361, 1.2063, 73.3251, 6721.6612, 1.0921, 
+				# 	  50.6289, 6738.733, 1.2063, 52.7458, 6736.0523, 1.0921]
 
 				# perform the fit
 				spec2.specfit.multifit(fittype='gaussian',
@@ -970,10 +984,22 @@ def FitRoutine(FittingInfo, cube):
 										tied = ties2,
 										annotate = False)
 				spec2.measure(fluxnorm = fluxnorm)
-				
+
+				# hacky check if the fits even worked! if not, let's run with the answer of nearest neighbor
+				# this manifests as None types in the errors list
+				# for whatever reason idk
+				if spec2.specfit.parinfo.errors[0] == None:
+						total_guesses2 = params2  # params from previous fit! hopefully
+						spec2.specfit.multifit(fittype='gaussian',
+												guesses = total_guesses2, 
+												limits = total_limits2,
+												limited = limited2,
+												tied = ties2,
+												annotate = False)
+						spec2.measure(fluxnorm = fluxnorm)
+
 				# get errors for the reduced chi square
-				errs2 = compute_rms(spec_axis, spectrum, continuum_limits[0], 
-									continuum_limits[1])
+				errs2 = compute_rms(spec_axis, spectrum, continuum_limits[0], continuum_limits[1])
 				
 				# get the fit params
 				amps2_list = []
@@ -1009,6 +1035,7 @@ def FitRoutine(FittingInfo, cube):
 
 				redchisq2 = round(red_chisq(chans_spec, chans_model2, err=errs2, 
 					free_params=free_params),4)
+				
 
 				# option to print out fits
 				if (save_fits != False) & (count % save_fits == 0):						
@@ -1036,8 +1063,8 @@ def FitRoutine(FittingInfo, cube):
 				with open("%sfits2_err.txt" % savepath, "a") as e2:
 					e2.write('%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,'
 	      					'%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,'
-	      					'%s, %s, %s, %s, %s, %s, %s, %s, %s, %s\n' %
-							(i, j, redchisq2,
+	      					'%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s\n' %
+							(i, j, redchisq2, errs2,
 							err_params2[0], err_params2[3], err_params2[6], err_params2[9], err_params2[12],
 	     					err_params2[15], err_params2[18], err_params2[21], err_params2[24], err_params2[27],
 						    err_params2[1], err_params2[4], err_params2[7], err_params2[10], err_params2[13],
@@ -1083,8 +1110,7 @@ def FitRoutine(FittingInfo, cube):
 				spec3.measure(fluxnorm = fluxnorm)
 				
 				# get errors for the reduced chi square
-				errs3 = compute_rms(spec_axis, spectrum, continuum_limits[0], 
-									continuum_limits[1])
+				errs3 = compute_rms(spec_axis, spectrum, continuum_limits[0], continuum_limits[1])
 				
 				# get the fit params
 				amps3_list = []
@@ -1154,8 +1180,8 @@ def FitRoutine(FittingInfo, cube):
 	      					'%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,'
 	      					'%s, %s, %s, %s, %s, %s, %s, %s, %s, %s,'
 							 '%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,'
-							'%s, %s, %s\n' %
-							(i, j, redchisq3,
+							'%s, %s, %s, %s\n' %
+							(i, j, redchisq3, errs3,
 							err_params3[0], err_params3[3], err_params3[6], err_params3[9], err_params3[12],
 	     					err_params3[15], err_params3[18], err_params3[21], err_params3[24], err_params3[27],
 						    err_params3[30], err_params3[33], err_params3[36], err_params3[39], err_params3[42],
